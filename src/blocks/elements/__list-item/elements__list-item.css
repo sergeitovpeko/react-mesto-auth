@@ -1,0 +1,8 @@
+.elements__list-item {
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  max-width: 282px;
+  overflow: hidden;
+  list-style-type: none;
+  position: relative;
+}

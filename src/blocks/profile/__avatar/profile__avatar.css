@@ -1,0 +1,26 @@
+.profile__avatar {
+  box-sizing: content-box;
+  width: 120px;
+  height: 128px;
+  grid-area: photo;
+  position: relative;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: black;
+  border: none;
+}
+
+@media (max-width: 1023px) {
+  .profile__avatar {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 767px) {
+  .profile__avatar {
+    margin: -4px 54px 22px 59px;
+    width: 120px;
+    height: 120px;
+  }
+}
