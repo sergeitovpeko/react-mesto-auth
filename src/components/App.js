@@ -37,7 +37,6 @@ function App() {
   //ПРОВЕРКА ТОКЕНА
   useEffect(() => {
     const jwt = localStorage.getItem("jwt")
-
     if (jwt) {
       auth
         .checkToken(jwt)
@@ -57,28 +56,28 @@ function App() {
 
   //ОТРИСОВКА ДАННЫХ ПОЛЬЗОВАТЕЛЯ И КАРТОЧЕК
   useEffect(() => {
-    setIsLoading(true)
-    api
-      .getUserInfo()
-      .then((profileInfo) => setCurrentUser(profileInfo))
-      .catch((error) => console.log(`Ошибка: ${error}`))
+    if (isLoggedIn) {
+      api
+        .getUserInfo()
+        .then((profileInfo) => setCurrentUser(profileInfo))
+        .catch((error) => console.log(`Ошибка: ${error}`))
 
-    api
-      .getInitialCards()
-      .then((data) => {
-        setCards(
-          data.map((card) => ({
-            _id: card._id,
-            name: card.name,
-            link: card.link,
-            likes: card.likes,
-            owner: card.owner,
-          }))
-        )
-      })
-      .catch((error) => console.log(`Ошибка: ${error}`))
-      .finally(() => setIsLoading(false))
-  }, [])
+      api
+        .getInitialCards()
+        .then((data) => {
+          setCards(
+            data.map((card) => ({
+              _id: card._id,
+              name: card.name,
+              link: card.link,
+              likes: card.likes,
+              owner: card.owner,
+            }))
+          )
+        })
+        .catch((error) => console.log(`Ошибка: ${error}`))
+    }
+  }, [isLoggedIn])
 
   //ФУНКЦИЯ ЗАКРЫТИЯ ПО ОВЕРЛЕЙ
   function closeByOverlay(evt) {
@@ -235,6 +234,8 @@ function App() {
         } else if (err.status === 401) {
           console.log("401 - пользователь с email не найден")
         }
+        setInfoToolTipPopupOpen(true)
+        setIsSuccess(false)
       })
   }
 

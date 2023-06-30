@@ -1,11 +1,10 @@
 import React from "react"
-import { useLocation, Link } from "react-router-dom"
+import { Switch, Route, Link } from "react-router-dom"
 import MobileMenu from "./MobileMenu"
 import burgerMenu from "../images/Line.svg"
 import closeMenuIcon from "../images/close-icon-mobile.svg"
 
 function Header(props) {
-  const location = useLocation()
   return (
     <div>
       <MobileMenu
@@ -15,30 +14,30 @@ function Header(props) {
       />
       <header className="header page__header mobile-menu__header">
         <a className="logo" href="#" target="_self" />
-
-        {location.pathname === "/sign-in" && (
-          <Link to="/sign-up" className="header__link">
-            Регистрация
-          </Link>
-        )}
-        {location.pathname === "/sign-up" && (
-          <Link to="/sign-in" className="header__link">
-            Войти
-          </Link>
-        )}
-        {location.pathname === "/" && (
-          <div className="header__user-info">
-            <p className="header__email">{props.email}</p>
-            <Link
-              to="/sign-in"
-              className="header__link"
-              onClick={props.onSignOut}
-            >
-              Выйти
+        <Switch>
+          <Route exact path="/sign-in">
+            <Link to="/sign-up" className="header__link">
+              Регистрация
             </Link>
-          </div>
-        )}
-
+          </Route>
+          <Route exact path="/sign-up">
+            <Link to="/sign-in" className="header__link">
+              Войти
+            </Link>
+          </Route>
+          <Route exact path="/">
+            <div className="header__user-info">
+              <p className="header__email">{props.email}</p>
+              <Link
+                to="/sign-in"
+                className="header__link"
+                onClick={props.onSignOut}
+              >
+                Выйти
+              </Link>
+            </div>
+          </Route>
+        </Switch>
         {props.isLoggedIn && (
           <button
             className="header__burger"
